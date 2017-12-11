@@ -15,6 +15,9 @@ namespace DemoForm
         private string fileType = "*.txt";
         private string result = "";
         private string newFile = "test.txt";
+        private List<string> files = new List<string>();
+        private List<string> results = new List<string>();
+        private List<string> fileNames = new List<string>();
 
         public Form1()
         {
@@ -31,14 +34,26 @@ namespace DemoForm
             {
                 string replaceText = txbReplace.Text;
                 string needReplaceText = txbNeedReplace.Text;
-                result = txbResult.Text.Replace(needReplaceText, replaceText);
-                txbResult.Text = result;
+                //result = txbResult.Text.Replace(needReplaceText, replaceText);
+                //txbResult.Text = result;
+
+                foreach(string file in files.ToArray())
+                {
+                    results.Add(file.Replace(needReplaceText, replaceText));
+                }
+                txbResult.Text = (results.ToArray())[0];
             }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            
+            if(txbPath.Text != "")
+            {
+                //File.WriteAllText(txbPath.Text + newFile, result);
+                // Lưu file mới với tên file cũ + '_test'
+                
+
+            }
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -51,14 +66,15 @@ namespace DemoForm
                 txbPath.Text = "Phải nhập địa chỉ thư mục để kiểm tra vào đây!";
             }
             else
-            {
+            { 
                 foreach (string file in Directory.GetFiles(folderDir, fileType))
                 {
                     string contents = File.ReadAllText(file);
-                    //result += contents;
-                    result = contents;
+                    fileNames.Add(Path.GetFileName(folderDir));
+                    files.Add(contents);
                 }
-                txbResult.Text = result;
+                
+                txbResult.Text = "Số lượng file đang đọc: " + (files.ToArray()).Length;
             }
 
         }
