@@ -17,7 +17,7 @@ namespace DemoForm
         private string newFile = "test.txt";
         private List<string> files = new List<string>();
         private List<string> results = new List<string>();
-        private List<string> fileNames = new List<string>();
+        private List<string> filePaths = new List<string>();
 
         public Form1()
         {
@@ -50,9 +50,20 @@ namespace DemoForm
             if(txbPath.Text != "")
             {
                 //File.WriteAllText(txbPath.Text + newFile, result);
-                // Lưu file mới với tên file cũ + '_test'
-                
-
+                // Lưu file mới với tên file cũ + '_test.txt'
+                /*
+                foreach (string file in filePaths.ToArray())
+                {
+                    foreach(string _result in results.ToArray())
+                    {
+                        File.WriteAllText(file + "_test.txt", _result);
+                    }
+                }
+                */
+                for (int i = 0; i < (filePaths.ToArray()).Length; i++)
+                {
+                    File.WriteAllText((filePaths.ToArray())[i] + "_test.txt", (results.ToArray())[i]);
+                }
             }
         }
 
@@ -70,10 +81,9 @@ namespace DemoForm
                 foreach (string file in Directory.GetFiles(folderDir, fileType))
                 {
                     string contents = File.ReadAllText(file);
-                    fileNames.Add(Path.GetFileName(folderDir));
+                    filePaths.Add(folderDir + Path.GetFileNameWithoutExtension(file));
                     files.Add(contents);
                 }
-                
                 txbResult.Text = "Số lượng file đang đọc: " + (files.ToArray()).Length;
             }
 
