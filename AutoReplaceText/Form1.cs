@@ -20,6 +20,10 @@ namespace DemoForm
         public Form1()
         {
             InitializeComponent();
+
+            timer1 = new Timer();
+            timer1.Tick += timer1_Tick;
+            timer1.Interval = 5000;
         }
 
         private void btnReplace_Click(object sender, EventArgs e)
@@ -66,9 +70,10 @@ namespace DemoForm
             }
         }
 
-        private void btnOpen_Click(object sender, EventArgs e)
+        private void btnAuto_Click(object sender, EventArgs e)
         {
             // Chỉ nhập vào textbox địa chỉ thư mục để quét tất cả các file txt sau đó hiển thị ra textbox số lượng file.
+            /*
             folderDir = txbPath.Text;
 
             if (folderDir == "")
@@ -85,6 +90,15 @@ namespace DemoForm
                 }
                 txbResult.Text = "Số lượng file đang đọc: " + (files.ToArray()).Length;
             }
+            */
+
+            //Sau khi click chọn thì cứ 5 giây quét file và mở lên 1 lần
+
+            // Khi ngừng click sẽ chạy và ngược lại
+            timer1.Enabled = !timer1.Enabled;
+            btnAuto.Text = btnAuto.Text == "Tự động" ? "Ngừng tự động" : "Tự động";
+
+
 
         }
 
@@ -93,6 +107,14 @@ namespace DemoForm
             folderBrowserDialog1 = new FolderBrowserDialog();
             folderBrowserDialog1.ShowDialog();
             txbPath.Text = folderBrowserDialog1.SelectedPath;
+        }
+
+        int i = 0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            i++;
+            txbReplace.Text = i.ToString();
+               
         }
     }
 }
