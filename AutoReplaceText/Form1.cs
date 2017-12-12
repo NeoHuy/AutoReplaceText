@@ -13,8 +13,6 @@ namespace DemoForm
     {
         private string folderDir = "";
         private string fileType = "*.txt";
-        private string result = "";
-        private string newFile = "test.txt";
         private List<string> files = new List<string>();
         private List<string> results = new List<string>();
         private List<string> filePaths = new List<string>();
@@ -41,6 +39,7 @@ namespace DemoForm
                 {
                     results.Add(file.Replace(needReplaceText, replaceText));
                 }
+                // Hiển thị tạm thời sau khi submitted hiện file đầu tiên thực hiện thay thế
                 txbResult.Text = (results.ToArray())[0];
             }
         }
@@ -87,6 +86,13 @@ namespace DemoForm
                 txbResult.Text = "Số lượng file đang đọc: " + (files.ToArray()).Length;
             }
 
+        }
+
+        private void btnOpenFolder_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1 = new FolderBrowserDialog();
+            folderBrowserDialog1.ShowDialog();
+            txbPath.Text = folderBrowserDialog1.SelectedPath;
         }
     }
 }

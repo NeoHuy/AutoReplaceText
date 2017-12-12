@@ -39,6 +39,8 @@
             this.btnReplace = new System.Windows.Forms.Button();
             this.txbNeedReplace = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -137,11 +139,22 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Từ cần thay thế";
             // 
+            // btnOpenFolder
+            // 
+            this.btnOpenFolder.Location = new System.Drawing.Point(394, 11);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(47, 23);
+            this.btnOpenFolder.TabIndex = 3;
+            this.btnOpenFolder.Text = "Open";
+            this.btnOpenFolder.UseVisualStyleBackColor = true;
+            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(446, 235);
+            this.ClientSize = new System.Drawing.Size(587, 235);
+            this.Controls.Add(this.btnOpenFolder);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnReplace);
             this.Controls.Add(this.btnOpen);
@@ -173,6 +186,8 @@
         private System.Windows.Forms.Button btnReplace;
         private System.Windows.Forms.TextBox txbNeedReplace;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Button btnOpenFolder;
     }
 }
 
