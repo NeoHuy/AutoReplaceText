@@ -42,7 +42,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnOpenFolder = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerAuto = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -63,9 +63,9 @@
             // 
             // btnAuto
             // 
-            this.btnAuto.Location = new System.Drawing.Point(152, 186);
+            this.btnAuto.Location = new System.Drawing.Point(458, 110);
             this.btnAuto.Name = "btnAuto";
-            this.btnAuto.Size = new System.Drawing.Size(75, 23);
+            this.btnAuto.Size = new System.Drawing.Size(89, 23);
             this.btnAuto.TabIndex = 2;
             this.btnAuto.Text = "Tự động";
             this.btnAuto.UseVisualStyleBackColor = true;
@@ -91,9 +91,9 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(314, 186);
+            this.btnSave.Location = new System.Drawing.Point(458, 81);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(89, 23);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Lưu";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -117,9 +117,9 @@
             // 
             // btnReplace
             // 
-            this.btnReplace.Location = new System.Drawing.Point(233, 186);
+            this.btnReplace.Location = new System.Drawing.Point(458, 52);
             this.btnReplace.Name = "btnReplace";
-            this.btnReplace.Size = new System.Drawing.Size(75, 23);
+            this.btnReplace.Size = new System.Drawing.Size(89, 23);
             this.btnReplace.TabIndex = 2;
             this.btnReplace.Text = "Thay thế";
             this.btnReplace.UseVisualStyleBackColor = true;
@@ -143,23 +143,24 @@
             // 
             // btnOpenFolder
             // 
-            this.btnOpenFolder.Location = new System.Drawing.Point(394, 11);
+            this.btnOpenFolder.Location = new System.Drawing.Point(458, 23);
             this.btnOpenFolder.Name = "btnOpenFolder";
-            this.btnOpenFolder.Size = new System.Drawing.Size(47, 23);
+            this.btnOpenFolder.Size = new System.Drawing.Size(89, 23);
             this.btnOpenFolder.TabIndex = 3;
-            this.btnOpenFolder.Text = "Open";
+            this.btnOpenFolder.Text = "Mở";
             this.btnOpenFolder.UseVisualStyleBackColor = true;
             this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
-            // timer1
+            // timerAuto
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerAuto.Interval = 1000;
+            this.timerAuto.Tick += new System.EventHandler(this.timerAuto_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 235);
+            this.ClientSize = new System.Drawing.Size(587, 201);
             this.Controls.Add(this.btnOpenFolder);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnReplace);
@@ -194,7 +195,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button btnOpenFolder;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerAuto;
     }
 }
 
