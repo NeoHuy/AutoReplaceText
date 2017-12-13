@@ -23,7 +23,7 @@ namespace DemoForm
 
             timerAuto = new Timer();
             timerAuto.Tick += timerAuto_Tick;
-            timerAuto.Interval = 5000;
+            timerAuto.Interval = 1000;
         }
 
         private void btnReplace_Click(object sender, EventArgs e)
@@ -85,11 +85,21 @@ namespace DemoForm
                 files.Add(contents);
                 
             }
-            ReplaceText();
-            SaveFile();
 
-            txbResult.Text = "Số lượng file đang đọc: " + (files.ToArray()).Length;
+            if(txbReplace.Text == "" || txbNeedReplace.Text == "" || txbReplace.Text == "" && txbNeedReplace.Text == "")
+            {
+                timerAuto.Enabled = false;
+                btnAuto.Text = "Tự động";
+                MessageBox.Show("Phải nhập đầy đủ thông tin!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                ReplaceText();
+                SaveFile();
 
+            }
+            
         }
 
         private void ReplaceText()
