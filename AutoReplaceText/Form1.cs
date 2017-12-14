@@ -16,6 +16,7 @@ namespace DemoForm
         private List<string> files = new List<string>();
         private List<string> results = new List<string>();
         private List<string> filePaths = new List<string>();
+        private List<int> filePathCanNotReplaceIndexs = new List<int>();
 
         public Form1()
         {
@@ -24,10 +25,17 @@ namespace DemoForm
             timerAuto = new Timer();
             timerAuto.Tick += timerAuto_Tick;
             timerAuto.Interval = 1000;
+
+            //Giá trị mẫu để test
+            txbPath.Text = "E:\\";
+            txbNeedReplace.Text = "You";
+            txbReplace.Text = "I";
+
         }
 
         private void btnReplace_Click(object sender, EventArgs e)
         {
+            OpenFile();
             ReplaceText();
         }
 
@@ -95,7 +103,7 @@ namespace DemoForm
 
         private void OpenFile()
         {
-            if(folderDir == "")
+            if (!HasValue(folderDir))
             {
                 folderDir = txbPath.Text;
             }
@@ -109,43 +117,54 @@ namespace DemoForm
 
         private void ReplaceText()
         {
-            string replaceText = txbReplace.Text;
-            string needReplaceText = txbNeedReplace.Text;
-            //result = txbResult.Text.Replace(needReplaceText, replaceText);
-            //txbResult.Text = result;
-            //string[] file;
-
-            for(int i = 0; i < files.ToArray().Length; i++)
+            if (HasValue(txbReplace.Text, txbNeedReplace.Text))
             {
-                //file[i] = files.ToArray()[i];
-                if(HasContainedTextToReplace(needReplaceText, files.ToArray()[i]))
+                string replaceText = txbReplace.Text;
+                string needReplaceText = txbNeedReplace.Text;
+                string fileReplaced = "";
+                
+                //result = txbResult.Text.Replace(needReplaceText, replaceText);
+                //txbResult.Text = result;
+                //string[] file;
+
+                for (int i = 0; i < files.ToArray().Length; i++)
                 {
-                    results.Add(files.ToArray()[i].Replace (replaceText, files.ToArray()[i]));
+                    //file[i] = files.ToArray()[i];
+                    if (HasContainedTextToReplace(needReplaceText, files.ToArray()[i]))
+                    {
+                        fileReplaced = files.ToArray()[i].Replace(needReplaceText, replaceText);
+                        results.Add(fileReplaced);
+                    }
+                    else
+                    {
+                        //filePaths.Remove(filePaths.ToArray()[i]);
+                        filePathCanNotReplaceIndexs.Add(filePaths.IndexOf(filePaths.ToArray()[i]));
+                    }
+                }
+
+                // Hiển thị tạm thời sau khi submitted hiện file đầu tiên thực hiện thay thế
+                if(results.ToArray().Length > 0)
+                {
+                    txbResult.Text = results.ToArray()[0];
                 }
                 else
                 {
-                    filePaths.Remove(filePaths.ToArray()[i]);
+                    txbResult.Text = "Không có gì để thay thế!";
                 }
+                
             }
-
-            foreach (string file in files.ToArray())
+            else
             {
-                if (HasContainedTextToReplace(needReplaceText, file))
-                {
-                    string fileReplaced = file.Replace(needReplaceText, replaceText);
-                    results.Add(fileReplaced);
-                    
-                    
-                }
+                MessageBox.Show("Bấm gì mà bấm! Nhập thông tin vào!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            // Hiển thị tạm thời sau khi submitted hiện file đầu tiên thực hiện thay thế
-            txbResult.Text = (results.ToArray())[0];
         }
 
         private void SaveFile()
         {
             if (txbPath.Text != "")
             {
+                
                 for (int i = 0; i < (filePaths.ToArray()).Length; i++)
                 {
                     File.WriteAllText((filePaths.ToArray())[i] + "_test.txt", (results.ToArray())[i]);
@@ -153,6 +172,7 @@ namespace DemoForm
                 files.Clear();
                 results.Clear();
                 filePaths.Clear();
+                filePathCanNotReplaceIndexs.Clear();
             }
         }
 
@@ -172,5 +192,17 @@ namespace DemoForm
                 return false;
             }
         }
+
+        private bool HasValue(string text)
+        {
+            return text != "" ? true : false;
+        }
+
+        private bool HasValue(string text1, string text2)
+        {
+            return text1 != "" && text2 != "" ? true : false;
+        }
+
+        
     }
 }
