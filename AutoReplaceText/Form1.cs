@@ -76,25 +76,16 @@ namespace DemoForm
 
         private void timerAuto_Tick(object sender, EventArgs e)
         {
-            //i++;
-            //txbReplace.Text = i.ToString();
-            foreach (string file in Directory.GetFiles(folderDir, fileType))
-            {
-                string contents = File.ReadAllText(file);
-                filePaths.Add(folderDir + Path.GetFileNameWithoutExtension(file));
-                files.Add(contents);
-                
-            }
-
-            if(txbReplace.Text == "" || txbNeedReplace.Text == "" || txbReplace.Text == "" && txbNeedReplace.Text == "")
+            if(txbReplace.Text == "" || txbNeedReplace.Text == "" || txbReplace.Text == "" && txbNeedReplace.Text == "" || txbPath.Text == "")
             {
                 timerAuto.Enabled = false;
                 btnAuto.Text = "Tự động";
-                MessageBox.Show("Phải nhập đầy đủ thông tin!", "Error",
+                MessageBox.Show("Bạn chưa nhập đầy đủ thông tin!", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
+                OpenFile();
                 ReplaceText();
                 SaveFile();
 
@@ -102,30 +93,53 @@ namespace DemoForm
             
         }
 
+        private void OpenFile()
+        {
+            if(folderDir == "")
+            {
+                folderDir = txbPath.Text;
+            }
+            foreach (string file in Directory.GetFiles(folderDir, fileType))
+            {
+                string contents = File.ReadAllText(file);
+                filePaths.Add(folderDir + Path.GetFileNameWithoutExtension(file));
+                files.Add(contents);
+            }
+        }
+
         private void ReplaceText()
         {
-            if (txbReplace.Text == "")
-            {
-                txbReplace.Text = "Nhập từ để thay thế vào đây!";
-            }
-            else if(txbNeedReplace.Text == "")
-            {
-                txbNeedReplace.Text = "Nhập từ cần thay thế vào đây!";
-            }
-            else
-            {
-                string replaceText = txbReplace.Text;
-                string needReplaceText = txbNeedReplace.Text;
-                //result = txbResult.Text.Replace(needReplaceText, replaceText);
-                //txbResult.Text = result;
+            string replaceText = txbReplace.Text;
+            string needReplaceText = txbNeedReplace.Text;
+            //result = txbResult.Text.Replace(needReplaceText, replaceText);
+            //txbResult.Text = result;
+            //string[] file;
 
-                foreach (string file in files.ToArray())
+            for(int i = 0; i < files.ToArray().Length; i++)
+            {
+                //file[i] = files.ToArray()[i];
+                if(HasContainedTextToReplace(needReplaceText, files.ToArray()[i]))
                 {
-                    results.Add(file.Replace(needReplaceText, replaceText));
+                    results.Add(files.ToArray()[i].Replace (replaceText, files.ToArray()[i]));
                 }
-                // Hiển thị tạm thời sau khi submitted hiện file đầu tiên thực hiện thay thế
-                txbResult.Text = (results.ToArray())[0];
+                else
+                {
+                    filePaths.Remove(filePaths.ToArray()[i]);
+                }
             }
+
+            foreach (string file in files.ToArray())
+            {
+                if (HasContainedTextToReplace(needReplaceText, file))
+                {
+                    string fileReplaced = file.Replace(needReplaceText, replaceText);
+                    results.Add(fileReplaced);
+                    
+                    
+                }
+            }
+            // Hiển thị tạm thời sau khi submitted hiện file đầu tiên thực hiện thay thế
+            txbResult.Text = (results.ToArray())[0];
         }
 
         private void SaveFile()
@@ -139,6 +153,23 @@ namespace DemoForm
                 files.Clear();
                 results.Clear();
                 filePaths.Clear();
+            }
+        }
+
+        /**
+         * Kiểm tra file có từ cần replace không?
+         * Hoặc đã replace chưa?
+         */
+        private bool HasContainedTextToReplace(string needReplaceText, string discText)
+        {
+            //Kiểm tra xem có từ cần replace 
+            if(discText.Contains(needReplaceText))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
