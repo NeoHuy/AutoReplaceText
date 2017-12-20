@@ -43,6 +43,7 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btnOpenFolder = new System.Windows.Forms.Button();
             this.timerAuto = new System.Windows.Forms.Timer(this.components);
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // label1
@@ -73,7 +74,7 @@
             // 
             // txbResult
             // 
-            this.txbResult.Location = new System.Drawing.Point(138, 91);
+            this.txbResult.Location = new System.Drawing.Point(138, 258);
             this.txbResult.Multiline = true;
             this.txbResult.Name = "txbResult";
             this.txbResult.ReadOnly = true;
@@ -156,11 +157,19 @@
             this.timerAuto.Interval = 1000;
             this.timerAuto.Tick += new System.EventHandler(this.timerAuto_Tick);
             // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(138, 94);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(250, 158);
+            this.treeView1.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 201);
+            this.ClientSize = new System.Drawing.Size(587, 374);
+            this.Controls.Add(this.treeView1);
             this.Controls.Add(this.btnOpenFolder);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnReplace);
@@ -196,6 +205,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Button btnOpenFolder;
         private System.Windows.Forms.Timer timerAuto;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 

@@ -16,7 +16,7 @@ namespace DemoForm
         private List<string> files = new List<string>();
         private List<string> results = new List<string>();
         private List<string> filePaths = new List<string>();
-        private List<int> filePathCanNotReplaceIndexs = new List<int>();
+        private List<string> canNotReplaceTextFile = new List<string>();
 
         public Form1()
         {
@@ -28,8 +28,10 @@ namespace DemoForm
 
             //Giá trị mẫu để test
             txbPath.Text = "E:\\";
-            txbNeedReplace.Text = "You";
-            txbReplace.Text = "I";
+            //txbNeedReplace.Text = "You";
+            //txbReplace.Text = "I";
+            txbNeedReplace.Text = "mechanical";
+            txbReplace.Text = "mech";
 
         }
 
@@ -138,7 +140,7 @@ namespace DemoForm
                     else
                     {
                         //filePaths.Remove(filePaths.ToArray()[i]);
-                        filePathCanNotReplaceIndexs.Add(filePaths.IndexOf(filePaths.ToArray()[i]));
+                        canNotReplaceTextFile.Add(filePaths[i]);
                     }
                 }
 
@@ -164,6 +166,7 @@ namespace DemoForm
         {
             if (txbPath.Text != "")
             {
+                DestroyAllFilePathCanNotReplace(canNotReplaceTextFile, filePaths);
                 
                 for (int i = 0; i < (filePaths.ToArray()).Length; i++)
                 {
@@ -172,7 +175,7 @@ namespace DemoForm
                 files.Clear();
                 results.Clear();
                 filePaths.Clear();
-                filePathCanNotReplaceIndexs.Clear();
+                canNotReplaceTextFile.Clear();
             }
         }
 
@@ -203,6 +206,13 @@ namespace DemoForm
             return text1 != "" && text2 != "" ? true : false;
         }
 
-        
+        private List<string> DestroyAllFilePathCanNotReplace(List<string> itemPaths, List<string> filePaths)
+        {
+            foreach(string path in itemPaths)
+            {
+                filePaths.Remove(path);
+            }
+            return filePaths;
+        }
     }
 }
