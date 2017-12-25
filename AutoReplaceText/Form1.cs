@@ -78,7 +78,7 @@ namespace DemoForm
 
         private void btnOpenFolder_Click(object sender, EventArgs e)
         {
-            folderBrowserDialog1 = new FolderBrowserDialog();
+            //folderBrowserDialog1 = new FolderBrowserDialog();
             folderBrowserDialog1.ShowDialog();
             txbPath.Text = folderBrowserDialog1.SelectedPath;
             folderDir = txbPath.Text;
@@ -213,6 +213,25 @@ namespace DemoForm
                 filePaths.Remove(path);
             }
             return filePaths;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            folderBrowserDialog1.ShowDialog();
+            folderListView.Items.Add(folderBrowserDialog1.SelectedPath);
+            //folderDir = txbPath.Text;
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i < folderListView.Items.Count; i++)
+            {
+                if(folderListView.Items[i].Selected)
+                {
+                    folderListView.Items[i].Remove();
+                    i--;
+                }
+            }
         }
     }
 }
