@@ -162,8 +162,10 @@
             // folderListView
             // 
             this.folderListView.Location = new System.Drawing.Point(138, 91);
+            this.folderListView.MultiSelect = false;
             this.folderListView.Name = "folderListView";
             this.folderListView.Size = new System.Drawing.Size(250, 201);
+            this.folderListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.folderListView.TabIndex = 4;
             this.folderListView.UseCompatibleStateImageBehavior = false;
             this.folderListView.View = System.Windows.Forms.View.List;

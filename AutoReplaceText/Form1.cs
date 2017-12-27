@@ -12,6 +12,7 @@ namespace DemoForm
     public partial class Form1 : Form
     {
         private string folderDir = "";
+        //private List<string> folderDirs = new List<string>();
         private string fileType = "*.txt";
         private List<string> files = new List<string>();
         private List<string> results = new List<string>();
@@ -69,11 +70,13 @@ namespace DemoForm
             */
 
             //Sau khi click chọn thì cứ 5 giây quét file và mở lên 1 lần
+            StopTimer();
+        }
+
+        private void StopTimer()
+        {
             timerAuto.Enabled = !timerAuto.Enabled;
             btnAuto.Text = btnAuto.Text == "Tự động" ? "Ngừng" : "Tự động";
-
-
-
         }
 
         private void btnOpenFolder_Click(object sender, EventArgs e)
@@ -86,7 +89,7 @@ namespace DemoForm
 
         private void timerAuto_Tick(object sender, EventArgs e)
         {
-            if(txbReplace.Text == "" || txbNeedReplace.Text == "" || txbReplace.Text == "" && txbNeedReplace.Text == "" || txbPath.Text == "")
+            if (txbReplace.Text == "" || txbNeedReplace.Text == "" || txbReplace.Text == "" && txbNeedReplace.Text == "" || txbPath.Text == "")
             {
                 timerAuto.Enabled = false;
                 btnAuto.Text = "Tự động";
@@ -98,22 +101,46 @@ namespace DemoForm
                 OpenFile();
                 ReplaceText();
                 SaveFile();
-
             }
-            
+
         }
 
         private void OpenFile()
         {
-            if (!HasValue(folderDir))
+            // Tránh trường hợp không click vào btnOpen mà nhập đường dẫn trong txbPath
+            //if (!HasValue(folderDir))
+            //{
+            //    folderDir = txbPath.Text;
+            //}
+
+            //Chỉ dùng khi click button Replace
+
+            //foreach (string file in Directory.GetFiles(folderDir, fileType))
+            //{
+            //    string contents = File.ReadAllText(file);
+            //    filePaths.Add(folderDir + Path.GetFileNameWithoutExtension(file));
+            //    files.Add(contents);
+            //}
+
+            //Chạy khi click button Tự động
+            //Không có giá trị gì trong listview thì ngừng chạy tự động
+            if (folderListView.Items.Count == 0)
             {
-                folderDir = txbPath.Text;
+                StopTimer();
+                MessageBox.Show("Bạn chưa nhập đầy đủ thông tin!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            foreach (string file in Directory.GetFiles(folderDir, fileType))
+            else
             {
-                string contents = File.ReadAllText(file);
-                filePaths.Add(folderDir + Path.GetFileNameWithoutExtension(file));
-                files.Add(contents);
+                foreach(string folder in folderListView.Items)
+                {
+                    foreach (string file in Directory.GetFiles(folder, fileType))
+                    {
+                        string contents = File.ReadAllText(file);
+                        filePaths.Add(folder + Path.GetFileNameWithoutExtension(file));
+                        files.Add(contents);
+                    }
+                }
             }
         }
 
@@ -124,7 +151,7 @@ namespace DemoForm
                 string replaceText = txbReplace.Text;
                 string needReplaceText = txbNeedReplace.Text;
                 string fileReplaced = "";
-                
+
                 //result = txbResult.Text.Replace(needReplaceText, replaceText);
                 //txbResult.Text = result;
                 //string[] file;
@@ -145,7 +172,7 @@ namespace DemoForm
                 }
 
                 // Hiển thị tạm thời sau khi submitted hiện file đầu tiên thực hiện thay thế
-                if(results.ToArray().Length > 0)
+                if (results.ToArray().Length > 0)
                 {
                     txbResult.Text = results.ToArray()[0];
                 }
@@ -153,7 +180,7 @@ namespace DemoForm
                 {
                     txbResult.Text = "Không có gì để thay thế!";
                 }
-                
+
             }
             else
             {
@@ -167,7 +194,7 @@ namespace DemoForm
             if (txbPath.Text != "")
             {
                 DestroyAllFilePathCanNotReplace(canNotReplaceTextFile, filePaths);
-                
+
                 for (int i = 0; i < (filePaths.ToArray()).Length; i++)
                 {
                     File.WriteAllText((filePaths.ToArray())[i] + "_test.txt", (results.ToArray())[i]);
@@ -186,7 +213,7 @@ namespace DemoForm
         private bool HasContainedTextToReplace(string needReplaceText, string discText)
         {
             //Kiểm tra xem có từ cần replace 
-            if(discText.Contains(needReplaceText))
+            if (discText.Contains(needReplaceText))
             {
                 return true;
             }
@@ -208,7 +235,7 @@ namespace DemoForm
 
         private List<string> DestroyAllFilePathCanNotReplace(List<string> itemPaths, List<string> filePaths)
         {
-            foreach(string path in itemPaths)
+            foreach (string path in itemPaths)
             {
                 filePaths.Remove(path);
             }
@@ -224,9 +251,9 @@ namespace DemoForm
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < folderListView.Items.Count; i++)
+            for (int i = 0; i < folderListView.Items.Count; i++)
             {
-                if(folderListView.Items[i].Selected)
+                if (folderListView.Items[i].Selected)
                 {
                     folderListView.Items[i].Remove();
                     i--;
