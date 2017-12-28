@@ -28,7 +28,6 @@ namespace DemoForm
             timerAuto.Interval = 1000;
 
             //Giá trị mẫu để test
-            txbPath.Text = "E:\\";
             //txbNeedReplace.Text = "You";
             //txbReplace.Text = "I";
             txbNeedReplace.Text = "mechanical";
@@ -83,13 +82,11 @@ namespace DemoForm
         {
             //folderBrowserDialog1 = new FolderBrowserDialog();
             folderBrowserDialog1.ShowDialog();
-            txbPath.Text = folderBrowserDialog1.SelectedPath;
-            folderDir = txbPath.Text;
         }
 
         private void timerAuto_Tick(object sender, EventArgs e)
         {
-            if (txbReplace.Text == "" || txbNeedReplace.Text == "" || txbReplace.Text == "" && txbNeedReplace.Text == "" || txbPath.Text == "")
+            if (txbReplace.Text == "" || txbNeedReplace.Text == "" || txbReplace.Text == "" && txbNeedReplace.Text == "")
             {
                 timerAuto.Enabled = false;
                 btnAuto.Text = "Tự động";
@@ -132,18 +129,18 @@ namespace DemoForm
             }
             else
             {
-                foreach(string folder in folderListView.Items)
+                foreach(ListViewItem folder in folderListView.Items)
                 {
-                    foreach (string file in Directory.GetFiles(folder, fileType))
+                    foreach (string file in Directory.GetFiles(folder.Text, fileType))
                     {
                         string contents = File.ReadAllText(file);
-                        filePaths.Add(folder + Path.GetFileNameWithoutExtension(file));
+                        filePaths.Add(folder.Text + Path.GetFileNameWithoutExtension(file));
                         files.Add(contents);
                     }
                 }
             }
         }
-
+        
         private void ReplaceText()
         {
             if (HasValue(txbReplace.Text, txbNeedReplace.Text))
@@ -174,11 +171,11 @@ namespace DemoForm
                 // Hiển thị tạm thời sau khi submitted hiện file đầu tiên thực hiện thay thế
                 if (results.ToArray().Length > 0)
                 {
-                    txbResult.Text = results.ToArray()[0];
+                    //txbResult.Text = results.ToArray()[0];
                 }
                 else
                 {
-                    txbResult.Text = "Không có gì để thay thế!";
+                    //txbResult.Text = "Không có gì để thay thế!";
                 }
 
             }
@@ -191,29 +188,26 @@ namespace DemoForm
 
         private void SaveFile()
         {
-            if (txbPath.Text != "")
-            {
-                DestroyAllFilePathCanNotReplace(canNotReplaceTextFile, filePaths);
+            DestroyAllFilePathCanNotReplace(canNotReplaceTextFile, filePaths);
 
-                for (int i = 0; i < (filePaths.ToArray()).Length; i++)
-                {
-                    File.WriteAllText((filePaths.ToArray())[i] + "_test.txt", (results.ToArray())[i]);
-                }
-                files.Clear();
-                results.Clear();
-                filePaths.Clear();
-                canNotReplaceTextFile.Clear();
+            for (int i = 0; i < (filePaths.ToArray()).Length; i++)
+            {
+                File.WriteAllText((filePaths.ToArray())[i] + "_test.txt", (results.ToArray())[i]);
             }
+            files.Clear();
+            results.Clear();
+            filePaths.Clear();
+            canNotReplaceTextFile.Clear();
         }
 
         /**
          * Kiểm tra file có từ cần replace không?
          * Hoặc đã replace chưa?
          */
-        private bool HasContainedTextToReplace(string needReplaceText, string discText)
+        private bool HasContainedTextToReplace(string needReplaceText, string descText)
         {
             //Kiểm tra xem có từ cần replace 
-            if (discText.Contains(needReplaceText))
+            if (descText.Contains(needReplaceText))
             {
                 return true;
             }
@@ -245,7 +239,19 @@ namespace DemoForm
         private void btnAdd_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.ShowDialog();
-            folderListView.Items.Add(folderBrowserDialog1.SelectedPath);
+            string folderSelectedPath = folderBrowserDialog1.SelectedPath;
+            string testString = folderSelectedPath.Substring(folderSelectedPath.Length - 2);
+
+            if (!testString.Contains("\\"))
+            {
+                folderSelectedPath += "\\";
+                folderListView.Items.Add(folderSelectedPath);
+            }
+            else
+            {
+                folderListView.Items.Add(folderSelectedPath);
+            }
+           
             //folderDir = txbPath.Text;
         }
 
