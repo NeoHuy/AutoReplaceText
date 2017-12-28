@@ -43,12 +43,12 @@
             this.btnRemove = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txbTimer = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnAuto
             // 
-            this.btnAuto.Location = new System.Drawing.Point(222, 344);
+            this.btnAuto.Location = new System.Drawing.Point(224, 367);
             this.btnAuto.Name = "btnAuto";
             this.btnAuto.Size = new System.Drawing.Size(89, 23);
             this.btnAuto.TabIndex = 2;
@@ -58,7 +58,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(107, 344);
+            this.btnSave.Location = new System.Drawing.Point(109, 367);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(89, 23);
             this.btnSave.TabIndex = 2;
@@ -84,7 +84,7 @@
             // 
             // btnReplace
             // 
-            this.btnReplace.Location = new System.Drawing.Point(12, 344);
+            this.btnReplace.Location = new System.Drawing.Point(14, 367);
             this.btnReplace.Name = "btnReplace";
             this.btnReplace.Size = new System.Drawing.Size(89, 23);
             this.btnReplace.TabIndex = 2;
@@ -162,25 +162,35 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Hẹn giờ";
             // 
-            // txbTimer
+            // comboBox1
             // 
-            this.txbTimer.Location = new System.Drawing.Point(12, 318);
-            this.txbTimer.Name = "txbTimer";
-            this.txbTimer.Size = new System.Drawing.Size(299, 20);
-            this.txbTimer.TabIndex = 1;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "15 phút",
+            "30 phút",
+            "1 giờ",
+            "2 giờ",
+            "3 giờ",
+            "6 giờ"});
+            this.comboBox1.Location = new System.Drawing.Point(12, 318);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(299, 21);
+            this.comboBox1.TabIndex = 8;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 376);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(324, 402);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.folderListView);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnReplace);
             this.Controls.Add(this.btnAuto);
-            this.Controls.Add(this.txbTimer);
             this.Controls.Add(this.txbNeedReplace);
             this.Controls.Add(this.txbReplace);
             this.Controls.Add(this.label2);
@@ -188,7 +198,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Name = "Form1";
-            this.Text = "Tự động thay thế hàng loạt";
+            this.Text = "Phần mềm thay thế đường dẫn tự động";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -209,7 +219,7 @@
         private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txbTimer;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

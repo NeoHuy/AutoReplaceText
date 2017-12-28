@@ -11,8 +11,6 @@ namespace DemoForm
 {
     public partial class Form1 : Form
     {
-        private string folderDir = "";
-        //private List<string> folderDirs = new List<string>();
         private string fileType = "*.txt";
         private List<string> files = new List<string>();
         private List<string> results = new List<string>();
@@ -24,8 +22,7 @@ namespace DemoForm
             InitializeComponent();
 
             timerAuto = new Timer();
-            timerAuto.Tick += timerAuto_Tick;
-            timerAuto.Interval = 1000;
+            
 
             //Giá trị mẫu để test
             //txbNeedReplace.Text = "You";
@@ -48,27 +45,9 @@ namespace DemoForm
 
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            // Chỉ nhập vào textbox địa chỉ thư mục để quét tất cả các file txt sau đó hiển thị ra textbox số lượng file.
-            /*
-            folderDir = txbPath.Text;
-
-            if (folderDir == "")
-            {
-                txbPath.Text = "Phải nhập địa chỉ thư mục để kiểm tra vào đây!";
-            }
-            else
-            { 
-                foreach (string file in Directory.GetFiles(folderDir, fileType))
-                {
-                    string contents = File.ReadAllText(file);
-                    filePaths.Add(folderDir + Path.GetFileNameWithoutExtension(file));
-                    files.Add(contents);
-                }
-                txbResult.Text = "Số lượng file đang đọc: " + (files.ToArray()).Length;
-            }
-            */
-
-            //Sau khi click chọn thì cứ 5 giây quét file và mở lên 1 lần
+            // Chọn thời gian quét file xong mới chạy
+            timerAuto.Tick += timerAuto_Tick;
+            timerAuto.Interval = 1000;
             StopTimer();
         }
 
@@ -104,22 +83,6 @@ namespace DemoForm
 
         private void OpenFile()
         {
-            // Tránh trường hợp không click vào btnOpen mà nhập đường dẫn trong txbPath
-            //if (!HasValue(folderDir))
-            //{
-            //    folderDir = txbPath.Text;
-            //}
-
-            //Chỉ dùng khi click button Replace
-
-            //foreach (string file in Directory.GetFiles(folderDir, fileType))
-            //{
-            //    string contents = File.ReadAllText(file);
-            //    filePaths.Add(folderDir + Path.GetFileNameWithoutExtension(file));
-            //    files.Add(contents);
-            //}
-
-            //Chạy khi click button Tự động
             //Không có giá trị gì trong listview thì ngừng chạy tự động
             if (folderListView.Items.Count == 0)
             {
