@@ -32,22 +32,24 @@ namespace DemoForm
 
         }
 
-        private void btnReplace_Click(object sender, EventArgs e)
-        {
-            OpenFile();
-            ReplaceText();
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            SaveFile();
-        }
-
         private void btnAuto_Click(object sender, EventArgs e)
         {
             // Chọn thời gian quét file xong mới chạy
             timerAuto.Tick += timerAuto_Tick;
             timerAuto.Interval = 1000;
+
+            if (cbbTime.Text != "")
+            {
+                timerAuto.Interval = ChooseTime(cbbTime.Text);
+
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa nhập đầy đủ thông tin!", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                StopTimer();
+            }
+
             StopTimer();
         }
 
@@ -228,6 +230,30 @@ namespace DemoForm
                     i--;
                 }
             }
+        }
+
+        private int ChooseTime(string condition)
+        {
+            switch(condition)
+            {
+                case "1 giây":
+                    return 1000;
+                case "5 giây":
+                    return 5000;
+                case "15 phút":
+                    return 1000 * 60 * 15;
+                case "30 phút":
+                    return 1000 * 60 * 30;
+                case "1 giờ":
+                    return 1000 * 60 * 60;
+                case "2 giờ":
+                    return 1000 * 60 * 120;
+                case "3 giờ":
+                    return 1000 * 60 * 180;
+                case "6 giờ":
+                    return 1000 * 60 * 360;
+            }
+            return 0;
         }
     }
 }
